@@ -42,7 +42,7 @@
     .wide{width:min(calc(100% - 2rem), var(--content-wide));margin-inline:auto}
     .section{padding:clamp(var(--space-12),7vw,var(--space-24)) 0}
     .eyebrow{font-size:var(--text-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--color-text-faint);font-weight:600}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;min-height:46px;padding:.8rem 1.1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;border:1px solid transparent;transition:.18s ease}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.65rem;min-height:46px;padding:.8rem 1.1rem;border-radius:var(--radius-full);font-size:var(--text-sm);font-weight:600;border:1px solid transparent;transition:.18s ease;cursor:pointer}
     .btn-primary{background:var(--color-primary);color:var(--color-text-inverse);box-shadow:var(--shadow-sm)}
     .btn-primary:hover{background:var(--color-primary-hover)}
     .btn-secondary{border-color:rgba(0,0,0,.12);background:var(--color-surface)}
@@ -135,7 +135,7 @@
           <h1>Experienced engineering leadership for teams that cannot afford expensive mistakes.</h1>
           <p>Patrick J. Delohery helps companies strengthen under-experienced engineering teams, rescue difficult product programs, and deliver reliable hardware, embedded, laser, and system-integration outcomes. His work spans ASICs, FPGAs, embedded controls, military systems, laser-based instruments, manufacturing transfer, verification strategy, and multidisciplinary product development.</p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="./">Contact Patrick</a>
+            <button class="btn btn-primary" type="button" data-contact-scroll>Contact Patrick</button>
           </div>
         </div>
         <div class="hero-layout" aria-label="Patrick J. Delohery portrait and selected accomplishments">
@@ -268,6 +268,19 @@
           r.setAttribute('data-theme',d);
         });
       }
+      document.querySelector('[data-contact-scroll]')?.addEventListener('click',()=>{
+        const contact=document.getElementById('contact');
+        const header=document.querySelector('.site-header');
+        if(!contact) return;
+        const headerOffset=(header?.offsetHeight || 0)+24;
+        const target=contact.getBoundingClientRect().top+window.scrollY-headerOffset;
+        const previousScrollBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        window.scrollTo(0,Math.max(0,target));
+        requestAnimationFrame(()=>{
+          document.documentElement.style.scrollBehavior=previousScrollBehavior;
+        });
+      });
     })();
   </script>
 </body>
